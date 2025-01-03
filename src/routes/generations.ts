@@ -8,8 +8,8 @@ const router = Router();
 // POST /generations - Start a new generation
 router.post('/', validateGenerate, async (req, res, next) => {
   try {
-    const generationId = await generationService.generate(req.body);
-    res.status(201).json({ id: generationId });
+    const generation = await generationService.generate(req.body);
+    res.status(201).json(generation);
   } catch (error) {
     if (error instanceof Error && error.message === 'Another generation is already in progress') {
       res.status(409).json({ error: error.message });
