@@ -14,11 +14,14 @@ if (missingEnvVars.length > 0) {
     process.exit(1);
 }
 
+// Configuration du client PostgreSQL
+const connectionString = process.env.SUPABASE_DB_URL;
+// Forcer la désactivation de SSL dans l'URL de connexion
+const connectionStringWithoutSSL = connectionString + "?sslmode=disable";
+
 const client = new Client({
-    connectionString: process.env.SUPABASE_DB_URL,
-    ssl: {
-        rejectUnauthorized: false
-    }
+    connectionString: connectionStringWithoutSSL,
+    ssl: false
 });
 
 // Fonction pour lire un fichier SQL et résoudre les imports
