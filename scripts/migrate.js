@@ -17,7 +17,9 @@ if (missingEnvVars.length > 0) {
 // Configuration du client PostgreSQL
 const client = new Client({
     connectionString: process.env.SUPABASE_DB_URL,
-    ssl: process.env.NODE_ENV === 'production'
+    ssl: process.env.NODE_ENV === 'production' ? {
+        rejectUnauthorized: false // Accepte les certificats auto-signés en production
+    } : false // Désactive SSL en développement
 });
 
 // Fonction pour lire un fichier SQL et résoudre les imports
